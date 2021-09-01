@@ -21,6 +21,11 @@ namespace MvvmBlazor.Components
         // ReSharper disable once PublicConstructorInAbstractClass
         public MvvmComponentBase() {}
 
+        public MvvmComponentBase(T viewModel)
+        {
+            BindingContext = viewModel;
+        }
+
         protected internal T BindingContext { get; set; } = null!;
 
         private void SetBindingContext()
@@ -52,7 +57,7 @@ namespace MvvmBlazor.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            SetBindingContext();
+            if (BindingContext is null) SetBindingContext();
             SetParameters();
             BindingContext?.OnInitialized();
         }
