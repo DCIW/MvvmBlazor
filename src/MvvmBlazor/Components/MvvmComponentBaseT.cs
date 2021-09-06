@@ -8,7 +8,7 @@ using MvvmBlazor.ViewModel;
 
 namespace MvvmBlazor.Components
 {
-    public abstract class MvvmComponentBase<T> : MvvmComponentBase where T : ViewModelBase
+    public abstract class MvvmComponentBase<T> : MvvmComponentBase where T : class, IViewModelBase
     {
         private IViewModelParameterSetter? _viewModelParameterSetter;
         

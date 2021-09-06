@@ -38,13 +38,13 @@ namespace MvvmBlazor.Components
 
         protected internal TValue Bind<TViewModel, TValue>(TViewModel viewModel,
             Expression<Func<TViewModel, TValue>> property)
-            where TViewModel : ViewModelBase
+            where TViewModel : IViewModelBase
         {
             return AddBinding(viewModel, property);
         }
 
         public virtual TValue AddBinding<TViewModel, TValue>(TViewModel viewModel,
-            Expression<Func<TViewModel, TValue>> propertyExpression) where TViewModel : ViewModelBase
+            Expression<Func<TViewModel, TValue>> propertyExpression) where TViewModel : IViewModelBase
         {
             var propertyInfo = ValidateAndResolveBindingContext(viewModel, propertyExpression);
 

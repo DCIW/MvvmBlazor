@@ -7,7 +7,7 @@ namespace MvvmBlazor.Internal.Parameters
 {
     internal interface IViewModelParameterSetter
     {
-        void ResolveAndSet(ComponentBase component, ViewModelBase viewModel);
+        void ResolveAndSet(ComponentBase component, IViewModelBase viewModel);
     }
 
     internal class ViewModelParameterSetter : IViewModelParameterSetter
@@ -21,7 +21,7 @@ namespace MvvmBlazor.Internal.Parameters
             _parameterCache = parameterCache ?? throw new ArgumentNullException(nameof(parameterCache));
         }
 
-        public void ResolveAndSet(ComponentBase component, ViewModelBase viewModel)
+        public void ResolveAndSet(ComponentBase component, IViewModelBase viewModel)
         {
             if (component == null) throw new ArgumentNullException(nameof(component));
             if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));

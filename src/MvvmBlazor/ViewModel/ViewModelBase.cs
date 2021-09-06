@@ -10,7 +10,7 @@ using MvvmBlazor.Internal.Bindings;
 
 namespace MvvmBlazor.ViewModel
 {
-    public abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : IViewModelBase
     {
         private readonly Dictionary<string, List<Func<object, Task>>> _subscriptions
             = new();
@@ -22,7 +22,7 @@ namespace MvvmBlazor.ViewModel
             if (!EqualityComparer<T>.Default.Equals(field, value))
             {
                 field = value;
-                OnPropertyChanged(propertyName!);
+                RaisePropertyChanged(propertyName!);
                 if (!_subscriptions.ContainsKey(propertyName!)) return true;
                 foreach (var action in _subscriptions[propertyName!]) action(value!);
                 return true;
@@ -31,7 +31,7 @@ namespace MvvmBlazor.ViewModel
             return false;
         }
 
-        public virtual void OnPropertyChanged(string propertyName)
+        public virtual void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -58,7 +58,7 @@ namespace MvvmBlazor.ViewModel
             if (!_subscriptions.ContainsKey(propertyName))
                 _subscriptions[propertyName] = new List<Func<object, Task>>();
 
-            _subscriptions[propertyName].Add(async value => await func((T) value).ConfigureAwait(false));
+            _subscriptions[propertyName].Add(async value => await func((T)value).ConfigureAwait(false));
         }
 
         #region Lifecycle Methods
